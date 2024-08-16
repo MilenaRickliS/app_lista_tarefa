@@ -27,10 +27,22 @@ class TarefaService{
 
     //update
     public function atualizar(){
-        
+        $query = "update tb_tarefas set tarefa = ? where id = ?";
+        $conn = $this->conexao->prepare($query);
+        $conn->bindValue(1, $this->tarefa->__get('tarefa'));
+        $conn->bindValue(2, $this->tarefa->__get('id'));
+
+        return $conn->execute();
     }
 
     //delete
+    public function remover(){
+        $query = "delete from tb_tarefas where id = :id";
+        $conn = $this->conexao->prepare($query);
+        $conn->bindValue(':id', $this->tarefa->__get('id'));
+        $conn->execute();
+
+    }
 }
 
 ?>
