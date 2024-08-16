@@ -41,7 +41,24 @@ class TarefaService{
         $conn = $this->conexao->prepare($query);
         $conn->bindValue(':id', $this->tarefa->__get('id'));
         $conn->execute();
+    }
 
+    //marcar a tarefa como realizada
+    public function TarefaRealizada(){
+        $query = "update tb_tarefas set id_status = ? where id = ?";
+        $conn = $this->conexao->prepare($query);
+        $conn->bindValue(1, $this->tarefa->__get('id_status'));
+        $conn->bindValue(2, $this->tarefa->__get('id'));
+        return $conn->execute();
+    }
+
+    //recuperar tarefas pendentes
+    public function TarefasPendentes(){
+        $query = "select t.id, s.status, t.tarefa from tb_tarefas as t left join tb_status as s on (t.id_status = s.id) where t.id_status = :id_status";
+        $conn = $this->conexao->prepare($query);
+        $conn->bindValue(':id_status', $this->tarefa->__get('id_status'));
+        $conn->execute();
+        return $conn->fetchAll((PDO::FETCH_OBJ));
     }
 }
 
