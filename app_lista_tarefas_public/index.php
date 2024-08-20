@@ -76,7 +76,7 @@
 				location.href = 'index.php?pag=index&acao=remover&id='+id;
 			}
 
-			function marcarRealizada(id) {
+			function TarefaRealizada(id) {
 				location.href = 'index.php?pag=index&acao=TarefaRealizada&id='+id;
 			}
 		</script>
