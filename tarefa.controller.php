@@ -25,7 +25,7 @@ if($acao == 'inserir'){
     $conexao = $tarefaController->criacaoConexao();
     $tarefaService = new TarefaService($conexao, $tarefa); 
     $tarefaService->inserir();
-    
+
 }else if($acao == 'recuperar'){
     $tarefa = $tarefaController->criacaoTarefa();
     $conexao = $tarefaController->criacaoConexao();
@@ -48,17 +48,23 @@ if($acao == 'inserir'){
 
 }else if($acao == 'TarefaRealizada'){
     $tarefa = $tarefaController->criacaoTarefa();
-    $tarefa->__set('id_status', $_POST['id_status']);    
+    $tarefa->__set('id', $_GET['id'])->__set('id_status', 2);   
     $conexao = $tarefaController->criacaoConexao();
-    $tarefaService = new TarefaService($conexao, $tarefa); 
-    $tarefaService->TarefaRealizada();
+    $tarefaService = new TarefaService($conexao, $tarefa);
+		$tarefaService->TarefaRealizada();
+
+		if( isset($_GET['pag']) && $_GET['pag'] == 'index') {
+			header('location: index.php');	
+		} else {
+			header('location: todas_tarefas.php');
+		}
 
 }else if($acao == 'TarefasPendentes'){
     $tarefa = $tarefaController->criacaoTarefa();
-    $tarefa->__set('id_status', $_POST['id_status']);
+    $tarefa->__set('id_status', 1);
     $conexao = $tarefaController->criacaoConexao();
     $tarefaService = new TarefaService($conexao, $tarefa); 
-    $tarefaService->TarefasPendentes();
+    $tarefas = $tarefaService->TarefasPendentes();
 }
 
 ?>
