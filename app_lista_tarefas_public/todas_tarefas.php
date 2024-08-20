@@ -76,7 +76,7 @@
 				location.href = 'todas_tarefas.php?acao=remover&id='+id;
 			}
 
-			function marcarRealizada(id) {
+			function TarefaRealizada(id) {
 				location.href = 'todas_tarefas.php?acao=TarefaRealizada&id='+id;
 			}
 		</script>
