@@ -8,6 +8,7 @@
 	print_r($tarefas);
 	echo '</pre>';
 	*/
+	
 
 ?>
 
@@ -79,6 +80,12 @@
 			function TarefaRealizada(id) {
 				location.href = 'todas_tarefas.php?acao=TarefaRealizada&id='+id;
 			}
+			function OrderCriacao() {
+				location.href = 'todas_tarefas.php?acao=OrderCriacao';
+			}
+			function OrderPrioridade() {
+				location.href = 'todas_tarefas.php?acao=OrderPrioridade';
+			}
 		</script>
 	</head>
 
@@ -107,7 +114,11 @@
 						<div class="row">
 							<div class="col">
 								<h4>Todas tarefas</h4>
+								<button class="btn btn-secondary" onclick="OrderCriacao()">Ordenar por criação</button>
+								<button class="btn btn-secondary" onclick="OrderPrioridade()">Ordenar por prioridade</button>
 								<hr />
+
+								
 
 								<?php foreach($tarefas as $indice => $tarefa) { ?>
 									<div class="row mb-3 d-flex align-items-center tarefa">
@@ -125,6 +136,8 @@
 									</div>
 
 								<?php } ?>
+
+								
 								
 							</div>
 						</div>

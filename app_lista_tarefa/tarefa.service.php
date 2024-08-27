@@ -60,6 +60,48 @@ class TarefaService{
         $conn->execute();
         return $conn->fetchAll((PDO::FETCH_OBJ));
     }
+
+    //ordenar por data de criação
+    public function OrderCriacao(){
+        $query = "select t.id, s.status, t.tarefa from tb_tarefas as t left join tb_status as s on (t.id_status = s.id) order by t.data_cadastrado";
+        $conn = $this->conexao->prepare($query);
+        $conn->execute();
+        return $conn->fetchAll((PDO::FETCH_OBJ));
+    }
+
+    //ordenar por prioridade
+    public function OrderPrioridade(){
+        $query = "select t.id, s.status, t.tarefa from tb_tarefas as t left join tb_status as s on (t.id_status = s.id) order by t.tarefa";
+        $conn = $this->conexao->prepare($query);
+        $conn->execute();
+        return $conn->fetchAll((PDO::FETCH_OBJ));
+    }
+
+    //filtro exibir tarefas concluidas
+    public function FiltroConcluidas(){
+        $query = "select t.id, s.status, t.tarefa from tb_tarefas as t left join tb_status as s on (t.id_status = s.id) where t.id_status = 2";
+        $conn = $this->conexao->prepare($query);
+        $conn->execute();
+        return $conn->fetchAll((PDO::FETCH_OBJ));
+    }
+
+    //filtro exibir tarefas pendentes
+    public function FiltroPendentes(){
+        $query = "select t.id, s.status, t.tarefa from tb_tarefas as t left join tb_status as s on (t.id_status = s.id) where t.id_status = 1";
+        $conn = $this->conexao->prepare($query);
+        $conn->execute();
+        return $conn->fetchAll((PDO::FETCH_OBJ));
+    }
+
+
+
+    //sistema de notificações
+
+    //categoria tarefas
+
+    //filtro tarefas por categoria
+
+    //separar tarefas concluidas das pendentes
 }
 
 ?>

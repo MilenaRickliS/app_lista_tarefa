@@ -7,6 +7,8 @@
 
 	$acao = isset($_GET['acao']) ? $_GET['acao'] : $acao;
 
+
+
 	if($acao == 'inserir' ) {
 		$tarefa = new Tarefa();
 		$tarefa->__set('tarefa', $_POST['tarefa']);
@@ -85,7 +87,17 @@
 
 		$tarefaService = new TarefaService($conexao, $tarefa);
 		$tarefas = $tarefaService->TarefasPendentes();
-	}
+	} else if($acao == 'OrderCriacao') {
+		$tarefa = new Tarefa();
+		$conexao = new Conexao();
+		$tarefaService = new TarefaService($conexao, $tarefa);
+		$tarefas = $tarefaService->OrderCriacao();
+	} else if($acao == 'OrderPrioridade') {
+		$tarefa = new Tarefa();
+		$conexao = new Conexao();
+		$tarefaService = new TarefaService($conexao, $tarefa);
+		$tarefas = $tarefaService->OrderPrioridade();
+	} 
 
 
 ?>
