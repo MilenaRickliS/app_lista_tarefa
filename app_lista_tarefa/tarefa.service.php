@@ -78,20 +78,12 @@ class TarefaService{
         return $conn->fetchAll((PDO::FETCH_OBJ));
     }
 
-    //filtro exibir tarefas concluidas
-    public function FiltroConcluidas(){
-        $query = "select t.id, s.status, t.tarefa from tb_tarefas as t left join tb_status as s on (t.id_status = s.id) where t.id_status = 2";
+    public function FiltrarTarefas($status) {
+        $query = "SELECT * FROM tb_tarefas WHERE id_status = :status";
         $conn = $this->conexao->prepare($query);
+        $conn->bindValue(':status', $status);
         $conn->execute();
-        return $conn->fetchAll((PDO::FETCH_OBJ));
-    }
-
-    //filtro exibir tarefas pendentes
-    public function FiltroPendentes(){
-        $query = "select t.id, s.status, t.tarefa from tb_tarefas as t left join tb_status as s on (t.id_status = s.id) where t.id_status = 1";
-        $conn = $this->conexao->prepare($query);
-        $conn->execute();
-        return $conn->fetchAll((PDO::FETCH_OBJ));
+        return $conn->fetchAll(PDO::FETCH_OBJ);
     }
 
     //sistema de notificações
@@ -113,6 +105,12 @@ class TarefaService{
     //filtro tarefas por categoria
 
     //separar tarefas concluidas das pendentes
+    public function arquivarTarefa($id) {
+        $query = "UPDATE tb_tarefas SET id_status = 3 WHERE id = :id";
+        $conn = $this->conexao->prepare($query);
+        $conn->bindValue(':id', $id);
+        $conn->execute();
+    }
 }
 
 ?>

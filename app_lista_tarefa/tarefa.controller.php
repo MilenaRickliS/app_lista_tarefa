@@ -101,18 +101,14 @@
 		$conexao = new Conexao();
 		$tarefaService = new TarefaService($conexao, $tarefa);
 		$tarefas = $tarefaService->OrderPrioridade();
-	} else if($acao == 'FiltrarTarefas'){
-		$tarefa = new Tarefa();
-		$conexao = new Conexao();
+	} else if ($acao == 'FiltrarTarefas') {
+		$status = $_GET['status'];
 		$tarefaService = new TarefaService($conexao, $tarefa);
-	
-		if ($status == 'concluidas') {
-			$tarefas = $tarefaService->FiltroConcluidas();
-		} elseif ($status == 'pendentes') {
-			$tarefas = $tarefaService->FiltroPendentes();
-		} else {
-			$tarefas = $tarefaService->recuperar();
-		}
+		$tarefas = $tarefaService->FiltrarTarefas($status);
+	}else if ($acao == 'arquivarTarefa') {
+		$id = $_GET['id'];
+		$tarefaService = new TarefaService($conexao, $tarefa);
+		$tarefaService->arquivarTarefa($id);
 	}
 
 ?>
