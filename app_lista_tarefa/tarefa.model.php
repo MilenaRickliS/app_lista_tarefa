@@ -6,6 +6,7 @@ class Tarefa{
     private $id_status;
     private $tarefa;
     private $data_cadastrado;
+    private $data_limite;
 
     public function __get($atributo){
         return $this->$atributo;

@@ -1,7 +1,10 @@
 <?php
 
-	$acao = 'recuperar';
-	require 'tarefa_controller.php';
+if (isset($_GET['acao']) && $_GET['acao'] == 'FiltrarTarefas') {
+	$acao = 'FiltrarTarefas';
+	$status = $_GET['status'];
+}
+require 'tarefa_controller.php';
 
 	/*
 	echo '<pre>';
@@ -86,6 +89,10 @@
 			function OrderPrioridade() {
 				location.href = 'todas_tarefas.php?acao=OrderPrioridade';
 			}
+			function FiltrarTarefas(){
+				location.href = 'todas_tarefas.php?acao=FiltrarTarefas';
+			}
+			
 		</script>
 	</head>
 
@@ -106,6 +113,7 @@
 						<li class="list-group-item"><a href="index.php">Tarefas pendentes</a></li>
 						<li class="list-group-item"><a href="nova_tarefa.php">Nova tarefa</a></li>
 						<li class="list-group-item active"><a href="#">Todas tarefas</a></li>
+						<li class="list-group-item"><a href="tarefas_arquivadas.php">Tarefas Arquivadas</a></li>
 					</ul>
 				</div>
 
@@ -117,13 +125,32 @@
 								<button class="btn btn-secondary" onclick="OrderCriacao()">Ordenar por criação</button>
 								<button class="btn btn-secondary" onclick="OrderPrioridade()">Ordenar por prioridade</button>
 								<hr />
-
+								<form>
+									<select name="status">
+										<option value="todas">Todas</option>
+										<option value="concluidas">Concluídas</option>
+										<option value="pendentes">Pendentes</option>
+									</select>
+									<button type="submit">Filtrar</button>
+								</form>
+								<form>
+									<select name="categoria">
+										<option value="todas">Todas</option>
+										<option value="concluidas">Categoria1</option>
+										<option value="pendentes">Categoria2</option>
+										<option value="pendentes">Categoria3</option>
+									</select>
+									<button type="submit">Filtrar</button>
+								</form>
 								
 
 								<?php foreach($tarefas as $indice => $tarefa) { ?>
 									<div class="row mb-3 d-flex align-items-center tarefa">
 										<div class="col-sm-9" id="tarefa_<?= $tarefa->id ?>">
-											<?= $tarefa->tarefa ?> (<?= $tarefa->status ?>)
+											<?= $tarefa->tarefa ?> (<?= $tarefa->status  ?> )
+											<?php if($tarefa->status == 'realizado') { ?>
+												<button>Arquivar Tarefa Concluída</button>
+											<?php } ?>
 										</div>
 										<div class="col-sm-3 mt-2 d-flex justify-content-between">
 											<i class="fas fa-trash-alt fa-lg text-danger" onclick="remover(<?= $tarefa->id ?>)"></i>
@@ -131,7 +158,15 @@
 											<?php if($tarefa->status == 'pendente') { ?>
 												<i class="fas fa-edit fa-lg text-info" onclick="editar(<?= $tarefa->id ?>, '<?= $tarefa->tarefa ?>')"></i>
 												<i class="fas fa-check-square fa-lg text-success" onclick="TarefaRealizada(<?= $tarefa->id ?>)"></i>
+												<button>Adicionar Prazo</button>
+												<select name="categoria">
+													<option value="todas">Categoria1</option>
+													<option value="concluidas">Categoria2</option>
+													<option value="pendentes">Categoria3</option>
+												</select>
 											<?php } ?>
+											
+
 										</div>
 									</div>
 

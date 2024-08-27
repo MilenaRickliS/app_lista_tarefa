@@ -11,9 +11,10 @@ class TarefaService{
 
     //create 
     public function inserir(){
-        $query = "insert into tb_tarefas(tarefa)values(:tarefa)";
+        $query = "insert into tb_tarefas(tarefa, data_limite)values(:tarefa, :data_limite)";
         $conn = $this->conexao->prepare($query);
         $conn->bindValue(':tarefa', $this->tarefa->__get('tarefa'));
+        $conn->bindValue(':data_limite', $this->tarefa->__get('data_limite'));
         $conn->execute();
     }
 
@@ -93,9 +94,19 @@ class TarefaService{
         return $conn->fetchAll((PDO::FETCH_OBJ));
     }
 
-
-
     //sistema de notificações
+    public function dataLimite() {
+        $currentDate = new DateTime();
+        $oneWeekLater = $currentDate->add(new DateInterval('P7D'));
+    
+        $query = "SELECT * FROM tb_tarefas WHERE data_limite BETWEEN :currentDate AND :oneWeekLater";
+        $conn = $this->conexao->prepare($query);
+        $conn->bindValue(':currentDate', $currentDate->format('Y-m-d'));
+        $conn->bindValue(':oneWeekLater', $oneWeekLater->format('Y-m-d'));
+        $conn->execute();
+    
+        return $conn->fetchAll(PDO::FETCH_OBJ);
+    }
 
     //categoria tarefas
 

@@ -3,12 +3,6 @@
 	$acao = 'TarefasPendentes';
 	require 'tarefa_controller.php';
 
-	/*
-	echo '<pre>';
-	print_r($tarefas);
-	echo '</pre>';
-	*/
-
 ?>
 
 <html>
@@ -97,10 +91,10 @@
 			<div class="row">
 				<div class="col-md-3 menu">
 					<ul class="list-group">
-						<li class="list-group-item active"><a href="#">Tarefas pendentes</a></li>
+						<li class="list-group-item"><a href="index.php">Tarefas pendentes</a></li>
 						<li class="list-group-item"><a href="nova_tarefa.php">Nova tarefa</a></li>
 						<li class="list-group-item"><a href="todas_tarefas.php">Todas tarefas</a></li>
-						<li class="list-group-item"><a href="tarefas_arquivadas.php">Tarefas Arquivadas</a></li>
+						<li class="list-group-item active"><a href="#">Tarefas Arquivadas</a></li>
 					</ul>
 				</div>
 
@@ -108,22 +102,10 @@
 					<div class="container pagina">
 						<div class="row">
 							<div class="col">
-								<h4>Tarefas pendentes</h4>
+								<h4>Tarefas arquivadas</h4>
 								<hr />
 
-								<?php foreach($tarefas as $indice => $tarefa) { ?>
-									<div class="row mb-3 d-flex align-items-center tarefa">
-										<div class="col-sm-9" id="tarefa_<?= $tarefa->id ?>">
-											<?= $tarefa->tarefa ?>
-										</div>
-										<div class="col-sm-3 mt-2 d-flex justify-content-between">
-											<i class="fas fa-trash-alt fa-lg text-danger" onclick="remover(<?= $tarefa->id ?>)"></i>
-											<i class="fas fa-edit fa-lg text-info" onclick="editar(<?= $tarefa->id ?>, '<?= $tarefa->tarefa ?>')"></i>
-											<i class="fas fa-check-square fa-lg text-success" onclick="TarefaRealizada(<?= $tarefa->id ?>)"></i>
-										</div>
-									</div>
-
-								<?php } ?>
+								
 
 								
 							</div>

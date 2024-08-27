@@ -4,9 +4,13 @@
 	require "../app_lista_tarefa/tarefa.service.php";
 	require "../app_lista_tarefa/conexao.php";
 
+	
 
-	$acao = isset($_GET['acao']) ? $_GET['acao'] : $acao;
+	$acao = isset($_GET['acao']) ? $_GET['acao'] : 'recuperar';
+	$status = isset($_GET['status']) ? $_GET['status'] : '';
 
+
+	
 
 
 	if($acao == 'inserir' ) {
@@ -97,7 +101,18 @@
 		$conexao = new Conexao();
 		$tarefaService = new TarefaService($conexao, $tarefa);
 		$tarefas = $tarefaService->OrderPrioridade();
-	} 
-
+	} else if($acao == 'FiltrarTarefas'){
+		$tarefa = new Tarefa();
+		$conexao = new Conexao();
+		$tarefaService = new TarefaService($conexao, $tarefa);
+	
+		if ($status == 'concluidas') {
+			$tarefas = $tarefaService->FiltroConcluidas();
+		} elseif ($status == 'pendentes') {
+			$tarefas = $tarefaService->FiltroPendentes();
+		} else {
+			$tarefas = $tarefaService->recuperar();
+		}
+	}
 
 ?>
