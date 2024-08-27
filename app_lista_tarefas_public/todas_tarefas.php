@@ -92,6 +92,9 @@ require 'tarefa_controller.php';
 			function FiltrarTarefas(){
 				location.href = 'todas_tarefas.php?acao=FiltrarTarefas';
 			}
+			function arquivarTarefa(){
+				location.href = 'todas_tarefas.php?acao=arquivarTarefa';
+			}
 			
 		</script>
 	</head>
@@ -149,7 +152,7 @@ require 'tarefa_controller.php';
 										<div class="col-sm-9" id="tarefa_<?= $tarefa->id ?>">
 											<?= $tarefa->tarefa ?> (<?= $tarefa->status  ?> )
 											<?php if($tarefa->status == 'realizado') { ?>
-												<button>Arquivar Tarefa Concluída</button>
+												<button class="btn btn-secondary" onclick="arquivarTarefa()">Arquivar Tarefa Concluída</button>
 											<?php } ?>
 										</div>
 										<div class="col-sm-3 mt-2 d-flex justify-content-between">

@@ -111,7 +111,8 @@
 								<h4>Tarefas pendentes</h4>
 								<hr />
 
-								<?php foreach($tarefas as $indice => $tarefa) { ?>
+								<?php foreach($tarefas as $indice => $tarefa) { 
+									if($tarefa->status == 'pendente') {?>
 									<div class="row mb-3 d-flex align-items-center tarefa">
 										<div class="col-sm-9" id="tarefa_<?= $tarefa->id ?>">
 											<?= $tarefa->tarefa ?>
@@ -123,7 +124,7 @@
 										</div>
 									</div>
 
-								<?php } ?>
+								<?php } }?>
 
 								
 							</div>
