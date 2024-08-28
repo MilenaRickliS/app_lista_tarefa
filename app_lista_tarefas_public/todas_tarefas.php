@@ -139,9 +139,15 @@ require 'tarefa_controller.php';
 								<form>
 									<select name="categoria">
 										<option value="todas">Todas</option>
-										<option value="concluidas">Categoria1</option>
-										<option value="pendentes">Categoria2</option>
-										<option value="pendentes">Categoria3</option>
+										<option value="longoprazo">Tarefa de longo prazo</option>
+										<option value="longoprazo">Tarefa de longo prazo</option>
+										<option value="manutencao">Tarefa de manutenção</option>
+										<option value="prioritaria">Tarefa prioritária</option>
+										<option value="criativa">Tarefa criativa</option>
+										<option value="pesquisa">Tarefa de pesquisa</option>
+										<option value="aprendizado">Tarefa de aprendizado</option>
+										<option value="administrativa">Tarefa administrativa</option>
+										<option value="colaboracao">Tarefa de colaboração</option>										
 									</select>
 									<button type="submit">Filtrar</button>
 								</form>
@@ -161,12 +167,8 @@ require 'tarefa_controller.php';
 											<?php if($tarefa->status == 'pendente') { ?>
 												<i class="fas fa-edit fa-lg text-info" onclick="editar(<?= $tarefa->id ?>, '<?= $tarefa->tarefa ?>')"></i>
 												<i class="fas fa-check-square fa-lg text-success" onclick="TarefaRealizada(<?= $tarefa->id ?>)"></i>
-												<button>Adicionar Prazo</button>
-												<select name="categoria">
-													<option value="todas">Categoria1</option>
-													<option value="concluidas">Categoria2</option>
-													<option value="pendentes">Categoria3</option>
-												</select>
+												<p>Prazo</p>
+												<p>Categoria</p>
 											<?php } ?>
 											
 

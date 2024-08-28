@@ -47,6 +47,23 @@
 									<div class="form-group">
 										<label>Descrição da tarefa:</label>
 										<input type="text" class="form-control" name="tarefa" placeholder="Exemplo: Lavar o carro">
+										<select name="categoria">
+											<option value="rotina">Tarefa de rotina</option>
+											<option value="longoprazo">Tarefa de longo prazo</option>
+											<option value="manutencao">Tarefa de manutenção</option>
+											<option value="prioritaria">Tarefa prioritária</option>
+											<option value="criativa">Tarefa criativa</option>
+											<option value="pesquisa">Tarefa de pesquisa</option>
+											<option value="aprendizado">Tarefa de aprendizado</option>
+											<option value="administrativa">Tarefa administrativa</option>
+											<option value="colaboracao">Tarefa de colaboração</option>
+										</select>
+										<select name="prioridade">
+											<option value="concluidas">Baixa</option>
+											<option value="pendentes">Média</option>
+											<option value="pendentes">Alta</option>
+										</select>
+										<input type="date" class="form-control" name="data_limite" placeholder="Data de prazo para tarefa">
 									</div>
 
 									<button class="btn btn-success">Cadastrar</button>

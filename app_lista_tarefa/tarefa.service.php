@@ -11,9 +11,11 @@ class TarefaService{
 
     //create 
     public function inserir(){
-        $query = "insert into tb_tarefas(tarefa, data_limite)values(:tarefa, :data_limite)";
+        $query = "insert into tb_tarefas(tarefa, categoria, prioridade, data_limite)values(:tarefa, :categoria, :prioridade, :data_limite)";
         $conn = $this->conexao->prepare($query);
         $conn->bindValue(':tarefa', $this->tarefa->__get('tarefa'));
+        $conn->bindValue(':categoria', $this->tarefa->__get('categoria'));
+        $conn->bindValue(':prioridade', $this->tarefa->__get('prioridade'));
         $conn->bindValue(':data_limite', $this->tarefa->__get('data_limite'));
         $conn->execute();
     }
@@ -72,7 +74,7 @@ class TarefaService{
 
     //ordenar por prioridade
     public function OrderPrioridade(){
-        $query = "select t.id, s.status, t.tarefa from tb_tarefas as t left join tb_status as s on (t.id_status = s.id) order by t.tarefa";
+        $query = "select t.id, s.status, t.tarefa from tb_tarefas as t left join tb_status as s on (t.id_status = s.id) order by t.prioridade = alta";
         $conn = $this->conexao->prepare($query);
         $conn->execute();
         return $conn->fetchAll((PDO::FETCH_OBJ));

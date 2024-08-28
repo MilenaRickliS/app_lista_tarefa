@@ -5,17 +5,16 @@
 	require "../app_lista_tarefa/conexao.php";
 
 	
-
 	$acao = isset($_GET['acao']) ? $_GET['acao'] : 'recuperar';
 	$status = isset($_GET['status']) ? $_GET['status'] : '';
-
-
-	
 
 
 	if($acao == 'inserir' ) {
 		$tarefa = new Tarefa();
 		$tarefa->__set('tarefa', $_POST['tarefa']);
+		$tarefa->__set('categoria', $_POST['categoria']);
+    	$tarefa->__set('prioridade', $_POST['prioridade']);
+    	$tarefa->__set('data_limite', $_POST['data_limite']);	
 
 		$conexao = new Conexao();
 

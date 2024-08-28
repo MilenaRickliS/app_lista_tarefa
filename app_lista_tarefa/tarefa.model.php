@@ -8,6 +8,7 @@ class Tarefa{
     private $data_cadastrado;
     private $data_limite;
     private $categoria;
+    private $prioridade;
 
     public function __get($atributo){
         return $this->$atributo;
