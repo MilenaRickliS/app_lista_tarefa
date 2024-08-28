@@ -59,9 +59,9 @@
 											<option value="colaboracao">Tarefa de colaboração</option>
 										</select>
 										<select name="prioridade">
-											<option value="concluidas">Baixa</option>
-											<option value="pendentes">Média</option>
-											<option value="pendentes">Alta</option>
+											<option value="baixa">Baixa</option>
+											<option value="media">Média</option>
+											<option value="alta">Alta</option>
 										</select>
 										<input type="date" class="form-control" name="data_limite" placeholder="Data de prazo para tarefa">
 									</div>

@@ -6,9 +6,7 @@
 
 	
 	$acao = isset($_GET['acao']) ? $_GET['acao'] : 'recuperar';
-	$status = isset($_GET['status']) ? $_GET['status'] : '';
-
-
+	
 	if($acao == 'inserir' ) {
 		$tarefa = new Tarefa();
 		$tarefa->__set('tarefa', $_POST['tarefa']);
@@ -83,6 +81,7 @@
 		}
 	
 	} else if($acao == 'TarefasPendentes') {
+
 		$tarefa = new Tarefa();
 		$tarefa->__set('id_status', 1);
 		
@@ -91,20 +90,26 @@
 		$tarefaService = new TarefaService($conexao, $tarefa);
 		$tarefas = $tarefaService->TarefasPendentes();
 	} else if($acao == 'OrderCriacao') {
+
 		$tarefa = new Tarefa();
 		$conexao = new Conexao();
 		$tarefaService = new TarefaService($conexao, $tarefa);
 		$tarefas = $tarefaService->OrderCriacao();
 	} else if($acao == 'OrderPrioridade') {
+
 		$tarefa = new Tarefa();
 		$conexao = new Conexao();
 		$tarefaService = new TarefaService($conexao, $tarefa);
 		$tarefas = $tarefaService->OrderPrioridade();
+
 	} else if ($acao == 'FiltrarTarefas') {
+
 		$status = $_GET['status'];
-		$tarefaService = new TarefaService($conexao, $tarefa);
-		$tarefas = $tarefaService->FiltrarTarefas($status);
+    	$tarefaService = new TarefaService($conexao, $tarefa);
+    	$tarefas = $tarefaService->FiltrarTarefas($status);
+
 	}else if ($acao == 'arquivarTarefa') {
+
 		$id = $_GET['id'];
 		$tarefaService = new TarefaService($conexao, $tarefa);
 		$tarefaService->arquivarTarefa($id);

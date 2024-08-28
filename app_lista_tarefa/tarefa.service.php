@@ -22,7 +22,7 @@ class TarefaService{
 
     //read
     public function recuperar(){
-        $query = "select t.id, s.status, t.tarefa from tb_tarefas as t left join tb_status as s on (t.id_status = s.id)";
+        $query = "select t.id, s.status, t.tarefa, t.categoria, t.prioridade, t.data_limite from tb_tarefas as t left join tb_status as s on (t.id_status = s.id)";
         $conn = $this->conexao->prepare($query);
         $conn->execute();
         return $conn->fetchAll((PDO::FETCH_OBJ));
@@ -57,7 +57,7 @@ class TarefaService{
 
     //recuperar tarefas pendentes
     public function TarefasPendentes(){
-        $query = "select t.id, s.status, t.tarefa from tb_tarefas as t left join tb_status as s on (t.id_status = s.id) where t.id_status = :id_status";
+        $query = "select t.id, s.status, t.tarefa, t.categoria, t.prioridade, t.data_limite from tb_tarefas as t left join tb_status as s on (t.id_status = s.id) where t.id_status = :id_status";
         $conn = $this->conexao->prepare($query);
         $conn->bindValue(':id_status', $this->tarefa->__get('id_status'));
         $conn->execute();
@@ -66,7 +66,7 @@ class TarefaService{
 
     //ordenar por data de criação
     public function OrderCriacao(){
-        $query = "select t.id, s.status, t.tarefa from tb_tarefas as t left join tb_status as s on (t.id_status = s.id) order by t.data_cadastrado";
+        $query = "select t.id, s.status, t.tarefa, t.categoria, t.prioridade, t.data_limite from tb_tarefas as t left join tb_status as s on (t.id_status = s.id) order by t.data_cadastrado";
         $conn = $this->conexao->prepare($query);
         $conn->execute();
         return $conn->fetchAll((PDO::FETCH_OBJ));
@@ -74,16 +74,22 @@ class TarefaService{
 
     //ordenar por prioridade
     public function OrderPrioridade(){
-        $query = "select t.id, s.status, t.tarefa from tb_tarefas as t left join tb_status as s on (t.id_status = s.id) order by t.prioridade = alta";
+        $query = "select t.id, s.status, t.tarefa, t.categoria, t.prioridade, t.data_limite from tb_tarefas as t left join tb_status as s on (t.id_status = s.id) order by t.prioridade ";
         $conn = $this->conexao->prepare($query);
         $conn->execute();
         return $conn->fetchAll((PDO::FETCH_OBJ));
     }
 
     public function FiltrarTarefas($status) {
-        $query = "SELECT * FROM tb_tarefas WHERE id_status = :status";
+        if ($status == 'todas') {
+            $query = "SELECT * FROM tb_tarefas";
+        } elseif ($status == 'concluidas') {
+            $query = "SELECT * FROM tb_tarefas WHERE id_status = 2"; 
+        } elseif ($status == 'pendentes') {
+            $query = "SELECT * FROM tb_tarefas WHERE id_status = 1"; 
+        }
+    
         $conn = $this->conexao->prepare($query);
-        $conn->bindValue(':status', $status);
         $conn->execute();
         return $conn->fetchAll(PDO::FETCH_OBJ);
     }

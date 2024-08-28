@@ -3,12 +3,6 @@
 	$acao = 'TarefasPendentes';
 	require 'tarefa_controller.php';
 
-	/*
-	echo '<pre>';
-	print_r($tarefas);
-	echo '</pre>';
-	*/
-
 ?>
 
 <html>
@@ -121,6 +115,9 @@
 											<i class="fas fa-trash-alt fa-lg text-danger" onclick="remover(<?= $tarefa->id ?>)"></i>
 											<i class="fas fa-edit fa-lg text-info" onclick="editar(<?= $tarefa->id ?>, '<?= $tarefa->tarefa ?>')"></i>
 											<i class="fas fa-check-square fa-lg text-success" onclick="TarefaRealizada(<?= $tarefa->id ?>)"></i>
+											<p>Prazo: <?= $tarefa->data_limite?></p>
+											<p>Categoria: <?= $tarefa->categoria?></p>
+											<p>Prioridade: <?= $tarefa->prioridade ?></p>
 										</div>
 									</div>
 

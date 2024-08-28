@@ -1,9 +1,6 @@
 <?php
 
-if (isset($_GET['acao']) && $_GET['acao'] == 'FiltrarTarefas') {
-	$acao = 'FiltrarTarefas';
-	$status = $_GET['status'];
-}
+
 require 'tarefa_controller.php';
 
 	/*
@@ -90,7 +87,8 @@ require 'tarefa_controller.php';
 				location.href = 'todas_tarefas.php?acao=OrderPrioridade';
 			}
 			function FiltrarTarefas(){
-				location.href = 'todas_tarefas.php?acao=FiltrarTarefas';
+				var status = document.getElementsByName('status')[0].value;
+    			location.href = 'todas_tarefas.php?acao=FiltrarTarefas&status=' + status;
 			}
 			function arquivarTarefa(){
 				location.href = 'todas_tarefas.php?acao=arquivarTarefa';
@@ -134,7 +132,7 @@ require 'tarefa_controller.php';
 										<option value="concluidas">Concluídas</option>
 										<option value="pendentes">Pendentes</option>
 									</select>
-									<button type="submit">Filtrar</button>
+									<button type="submit" onclick="FiltrarTarefas()">Filtrar</button>
 								</form>
 								<form>
 									<select name="categoria">
@@ -167,8 +165,9 @@ require 'tarefa_controller.php';
 											<?php if($tarefa->status == 'pendente') { ?>
 												<i class="fas fa-edit fa-lg text-info" onclick="editar(<?= $tarefa->id ?>, '<?= $tarefa->tarefa ?>')"></i>
 												<i class="fas fa-check-square fa-lg text-success" onclick="TarefaRealizada(<?= $tarefa->id ?>)"></i>
-												<p>Prazo</p>
-												<p>Categoria</p>
+												<p>Prazo: <?= $tarefa->data_limite?></p>
+												<p>Categoria: <?= $tarefa->categoria?></p>
+												<p>Prioridade: <?= $tarefa->prioridade ?></p>
 											<?php } ?>
 											
 
