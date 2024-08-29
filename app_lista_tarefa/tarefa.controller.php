@@ -7,6 +7,7 @@
 	
 	$acao = isset($_GET['acao']) ? $_GET['acao'] : 'recuperar';
 	
+	
 	if($acao == 'inserir' ) {
 		$tarefa = new Tarefa();
 		$tarefa->__set('tarefa', $_POST['tarefa']);
@@ -25,6 +26,7 @@
 		
 		$tarefa = new Tarefa();
 		$conexao = new Conexao();
+		
 
 		$tarefaService = new TarefaService($conexao, $tarefa);
 		$tarefas = $tarefaService->recuperar();
@@ -108,11 +110,33 @@
     	$tarefaService = new TarefaService($conexao, $tarefa);
     	$tarefas = $tarefaService->FiltrarTarefas($status);
 
+
+	}else if ($acao == 'FiltrarCategorias') {
+		$tarefa = new Tarefa();
+		$conexao = new Conexao();			
+		$tarefa->__set('categoria', $categoria);
+
+		$tarefaService = new TarefaService($conexao, $tarefa);
+		$tarefas_filtered = $tarefaService->FiltrarCategorias($categoria);
+		
+		require_once 'todas_tarefas.php';
+		$tarefas = $tarefas_filtered;
+		
 	}else if ($acao == 'arquivarTarefa') {
 
-		$id = $_GET['id'];
+		$tarefa = new Tarefa();
+		$tarefa->__set('id', $_GET['id'])->__set('id_status', 3);
+
+		$conexao = new Conexao();
+
 		$tarefaService = new TarefaService($conexao, $tarefa);
-		$tarefaService->arquivarTarefa($id);
+		$tarefaService->arquivarTarefa();
+
+		if( isset($_GET['pag']) && $_GET['pag'] == 'todas_tarefas') {
+			header('location: todas_tarefas.php');	
+		} else {
+			header('location: tarefas_arquivadas.php');
+		}
 	}
 
 ?>

@@ -12,7 +12,8 @@ require 'tarefa_controller.php';
 
 ?>
 
-<html>
+<html lang="pt-br">
+
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -90,8 +91,12 @@ require 'tarefa_controller.php';
 				var status = document.getElementsByName('status')[0].value;
     			location.href = 'todas_tarefas.php?acao=FiltrarTarefas&status=' + status;
 			}
-			function arquivarTarefa(){
-				location.href = 'todas_tarefas.php?acao=arquivarTarefa';
+			function FiltrarCategorias(categoria){
+				
+    			location.href = 'todas_tarefas.php?acao=FiltrarCategorias&categoria=' + categoria;
+			}
+			function arquivarTarefa(id){
+				location.href = 'todas_tarefas.php?acao=arquivarTarefa&id=' + id;
 			}
 			
 		</script>
@@ -132,12 +137,12 @@ require 'tarefa_controller.php';
 										<option value="concluidas">Concluídas</option>
 										<option value="pendentes">Pendentes</option>
 									</select>
-									<button type="submit" onclick="FiltrarTarefas()">Filtrar</button>
-								</form>
+									<button type="submit" onclick="FiltrarTarefas()">Filtrar Tarefas</button>
+								
 								<form>
 									<select name="categoria">
 										<option value="todas">Todas</option>
-										<option value="longoprazo">Tarefa de longo prazo</option>
+										<option value="rotina">Tarefa de rotina</option>
 										<option value="longoprazo">Tarefa de longo prazo</option>
 										<option value="manutencao">Tarefa de manutenção</option>
 										<option value="prioritaria">Tarefa prioritária</option>
@@ -147,16 +152,17 @@ require 'tarefa_controller.php';
 										<option value="administrativa">Tarefa administrativa</option>
 										<option value="colaboracao">Tarefa de colaboração</option>										
 									</select>
-									<button type="submit">Filtrar</button>
-								</form>
+									<button type="submit" onclick="FiltrarCategorias(this.value)">Filtrar por Categoria</button>
+								
 								
 
 								<?php foreach($tarefas as $indice => $tarefa) { ?>
+									<?php if($tarefa->status == 'pendente' || $tarefa->status == 'realizado') { ?>
 									<div class="row mb-3 d-flex align-items-center tarefa">
 										<div class="col-sm-9" id="tarefa_<?= $tarefa->id ?>">
 											<?= $tarefa->tarefa ?> (<?= $tarefa->status  ?> )
 											<?php if($tarefa->status == 'realizado') { ?>
-												<button class="btn btn-secondary" onclick="arquivarTarefa()">Arquivar Tarefa Concluída</button>
+												<button class="btn btn-secondary" onclick="arquivarTarefa(<?= $tarefa->id ?>)">Arquivar Tarefa Concluída</button>
 											<?php } ?>
 										</div>
 										<div class="col-sm-3 mt-2 d-flex justify-content-between">
@@ -173,9 +179,10 @@ require 'tarefa_controller.php';
 
 										</div>
 									</div>
-
+									<?php } ?>
 								<?php } ?>
-
+								</form>
+								</form>
 								
 								
 							</div>

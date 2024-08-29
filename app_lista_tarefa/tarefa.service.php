@@ -93,7 +93,27 @@ class TarefaService{
         $conn->execute();
         return $conn->fetchAll(PDO::FETCH_OBJ);
     }
-
+    public function FiltrarCategorias($categoria) {
+        if ($categoria == 'todas') {
+            $query = "SELECT t.id, s.status, t.tarefa, t.categoria, t.prioridade, t.data_limite 
+                       FROM tb_tarefas AS t 
+                       LEFT JOIN tb_status AS s ON (t.id_status = s.id)";
+            $conn = $this->conexao->prepare($query);
+            $conn->execute();
+            return $conn->fetchAll(PDO::FETCH_OBJ);
+        } else {
+            $query = "SELECT t.id, s.status, t.tarefa, t.categoria, t.prioridade, t.data_limite 
+                       FROM tb_tarefas AS t 
+                       LEFT JOIN tb_status AS s ON (t.id_status = s.id) 
+                       WHERE t.categoria = :categoria";
+            $conn = $this->conexao->prepare($query);
+            $conn->bindValue(':categoria', $categoria);
+            $conn->execute();
+            return $conn->fetchAll(PDO::FETCH_OBJ);
+        }
+        
+        
+    }
     //sistema de notificações
     public function dataLimite() {
         $currentDate = new DateTime();
@@ -113,11 +133,12 @@ class TarefaService{
     //filtro tarefas por categoria
 
     //separar tarefas concluidas das pendentes
-    public function arquivarTarefa($id) {
-        $query = "UPDATE tb_tarefas SET id_status = 3 WHERE id = :id";
+    public function arquivarTarefa() {
+        $query = "update tb_tarefas set id_status = :id_status where id = :id";
         $conn = $this->conexao->prepare($query);
-        $conn->bindValue(':id', $id);
-        $conn->execute();
+        $conn->bindValue(':id_status', 3);
+        $conn->bindValue(':id', $this->tarefa->__get('id'));
+        return $conn->execute();
     }
 }
 
