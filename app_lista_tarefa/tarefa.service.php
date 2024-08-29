@@ -79,19 +79,22 @@ class TarefaService{
         $conn->execute();
         return $conn->fetchAll((PDO::FETCH_OBJ));
     }
-    //filtro tarefas
+
+    // Filtro tarefas
     public function FiltrarTarefas($status) {
-        if($status == 'todas'){
+        if($status == "todas"){
             $query = "select t.id, s.status, t.tarefa, t.categoria, t.prioridade, t.data_limite from tb_tarefas as t left join tb_status as s on (t.id_status = s.id)";
+            $conn = $this->conexao->prepare($query);
         }else{
             $query = "select t.id, s.status, t.tarefa, t.categoria, t.prioridade, t.data_limite from tb_tarefas as t left join tb_status as s on (t.id_status = s.id) where s.status = :status";
+            $conn = $this->conexao->prepare($query);
+            $conn->bindValue(':status', $status);
         }
         
-        $conn = $this->conexao->prepare($query);
-        $conn->bindValue(':status', $this->tarefa->__get('status'));
         $conn->execute();
-        return $conn->fetchAll((PDO::FETCH_OBJ));
+        return $conn->fetchAll(PDO::FETCH_OBJ);
     }
+
     //filtro categorias
     public function FiltrarCategorias($categoria) {
         if ($categoria == 'todas') {
@@ -99,8 +102,6 @@ class TarefaService{
                        FROM tb_tarefas AS t 
                        LEFT JOIN tb_status AS s ON (t.id_status = s.id)";
             $conn = $this->conexao->prepare($query);
-            $conn->execute();
-            return $conn->fetchAll(PDO::FETCH_OBJ);
         } else {
             $query = "SELECT t.id, s.status, t.tarefa, t.categoria, t.prioridade, t.data_limite 
                        FROM tb_tarefas AS t 
@@ -108,10 +109,9 @@ class TarefaService{
                        WHERE t.categoria = :categoria";
             $conn = $this->conexao->prepare($query);
             $conn->bindValue(':categoria', $categoria);
-            $conn->execute();
-            return $conn->fetchAll(PDO::FETCH_OBJ);
         }
-        
+        $conn->execute();
+        return $conn->fetchAll(PDO::FETCH_OBJ);
         
     }
     //sistema de notificações

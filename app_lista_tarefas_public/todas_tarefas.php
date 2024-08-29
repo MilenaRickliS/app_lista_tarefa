@@ -174,19 +174,18 @@ require 'tarefa_controller.php';
 												<p>Prazo: <?= $tarefa->data_limite?></p>
 												<p>Categoria: <?= $tarefa->categoria?></p>
 												<p>Prioridade: <?= $tarefa->prioridade ?></p>
+												<?php 
+													$today = date('Y-m-d');												
+													if($tarefa->data_limite <= $today) {
+														// Prazo expirado
+														echo '<span class="text-danger">Prazo expirado!</span>';
+													} else if($tarefa->data_limite <= date('Y-m-d', strtotime('+7 days'))) {
+														// Prazo próximo
+														echo '<span class="text-warning">Prazo próximo!</span>';
+													}
+												?>
 											<?php } ?>
-
-											<?php 
-												$today = date('Y-m-d');
-												if($tarefa->data_limite <= $today) {
-													// Prazo expirado
-													echo '<span class="text-danger">Prazo expirado!</span>';
-												} elseif($tarefa->data_limite <= date('Y-m-d', strtotime('+7 days'))) {
-													// Prazo próximo
-													echo '<span class="text-warning">Prazo próximo!</span>';
-												}
-											?>
-											
+										
 
 										</div>
 									</div>
