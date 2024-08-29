@@ -1,6 +1,5 @@
 <?php
 
-	$acao = 'TarefasPendentes';
 	require 'tarefa_controller.php';
 
 ?>
@@ -14,66 +13,6 @@
 		<link rel="stylesheet" href="css/estilo.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-
-		<script>
-			function editar(id, txt_tarefa) {
-
-				//criar um form de edição
-				let form = document.createElement('form')
-				form.action = 'index.php?pag=index&acao=atualizar'
-				form.method = 'post'
-				form.className = 'row'
-
-				//criar um input para entrada do texto
-				let inputTarefa = document.createElement('input')
-				inputTarefa.type = 'text'
-				inputTarefa.name = 'tarefa'
-				inputTarefa.className = 'col-9 form-control'
-				inputTarefa.value = txt_tarefa
-
-				//criar um input hidden para guardar o id da tarefa
-				let inputId = document.createElement('input')
-				inputId.type = 'hidden'
-				inputId.name = 'id'
-				inputId.value = id
-
-				//criar um button para envio do form
-				let button = document.createElement('button')
-				button.type = 'submit'
-				button.className = 'col-3 btn btn-info'
-				button.innerHTML = 'Atualizar'
-
-				//incluir inputTarefa no form
-				form.appendChild(inputTarefa)
-
-				//incluir inputId no form
-				form.appendChild(inputId)
-
-				//incluir button no form
-				form.appendChild(button)
-
-				//teste
-				//console.log(form)
-
-				//selecionar a div tarefa
-				let tarefa = document.getElementById('tarefa_'+id)
-
-				//limpar o texto da tarefa para inclusão do form
-				tarefa.innerHTML = ''
-
-				//incluir form na página
-				tarefa.insertBefore(form, tarefa[0])
-
-			}
-
-			function remover(id) {
-				location.href = 'index.php?pag=index&acao=remover&id='+id;
-			}
-
-			function TarefaRealizada(id) {
-				location.href = 'index.php?pag=index&acao=TarefaRealizada&id='+id;
-			}
-		</script>
 
 	</head>
 
@@ -109,7 +48,7 @@
 									if($tarefa->status == 'arquivado') {?>
 									<div class="row mb-3 d-flex align-items-center tarefa">
 										<div class="col-sm-9" id="tarefa_<?= $tarefa->id ?>">
-											<?= $tarefa->tarefa ?>
+											<?= $tarefa->tarefa ?><?= $tarefa->data_limite?><?= $tarefa->categoria?>
 										</div>
 										
 									</div>

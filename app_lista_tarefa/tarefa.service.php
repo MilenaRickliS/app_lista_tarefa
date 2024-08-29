@@ -79,7 +79,7 @@ class TarefaService{
         $conn->execute();
         return $conn->fetchAll((PDO::FETCH_OBJ));
     }
-
+    //filtro tarefas
     public function FiltrarTarefas($status) {
         if ($status == 'todas') {
             $query = "SELECT * FROM tb_tarefas";
@@ -93,6 +93,7 @@ class TarefaService{
         $conn->execute();
         return $conn->fetchAll(PDO::FETCH_OBJ);
     }
+    //filtro categorias
     public function FiltrarCategorias($categoria) {
         if ($categoria == 'todas') {
             $query = "SELECT t.id, s.status, t.tarefa, t.categoria, t.prioridade, t.data_limite 
@@ -115,22 +116,7 @@ class TarefaService{
         
     }
     //sistema de notificações
-    public function dataLimite() {
-        $currentDate = new DateTime();
-        $oneWeekLater = $currentDate->add(new DateInterval('P7D'));
     
-        $query = "SELECT * FROM tb_tarefas WHERE data_limite BETWEEN :currentDate AND :oneWeekLater";
-        $conn = $this->conexao->prepare($query);
-        $conn->bindValue(':currentDate', $currentDate->format('Y-m-d'));
-        $conn->bindValue(':oneWeekLater', $oneWeekLater->format('Y-m-d'));
-        $conn->execute();
-    
-        return $conn->fetchAll(PDO::FETCH_OBJ);
-    }
-
-    //categoria tarefas
-
-    //filtro tarefas por categoria
 
     //separar tarefas concluidas das pendentes
     public function arquivarTarefa() {
