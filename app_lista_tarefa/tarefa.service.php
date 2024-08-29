@@ -81,17 +81,16 @@ class TarefaService{
     }
     //filtro tarefas
     public function FiltrarTarefas($status) {
-        if ($status == 'todas') {
-            $query = "SELECT * FROM tb_tarefas";
-        } elseif ($status == 'concluidas') {
-            $query = "SELECT * FROM tb_tarefas WHERE id_status = 2"; 
-        } elseif ($status == 'pendentes') {
-            $query = "SELECT * FROM tb_tarefas WHERE id_status = 1"; 
+        if($status == 'todas'){
+            $query = "select t.id, s.status, t.tarefa, t.categoria, t.prioridade, t.data_limite from tb_tarefas as t left join tb_status as s on (t.id_status = s.id)";
+        }else{
+            $query = "select t.id, s.status, t.tarefa, t.categoria, t.prioridade, t.data_limite from tb_tarefas as t left join tb_status as s on (t.id_status = s.id) where s.status = :status";
         }
-    
+        
         $conn = $this->conexao->prepare($query);
+        $conn->bindValue(':status', $this->tarefa->__get('status'));
         $conn->execute();
-        return $conn->fetchAll(PDO::FETCH_OBJ);
+        return $conn->fetchAll((PDO::FETCH_OBJ));
     }
     //filtro categorias
     public function FiltrarCategorias($categoria) {

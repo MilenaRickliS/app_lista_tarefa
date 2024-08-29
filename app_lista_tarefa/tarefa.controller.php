@@ -91,12 +91,14 @@
 
 		$tarefaService = new TarefaService($conexao, $tarefa);
 		$tarefas = $tarefaService->TarefasPendentes();
+
 	} else if($acao == 'OrderCriacao') {
 
 		$tarefa = new Tarefa();
 		$conexao = new Conexao();
 		$tarefaService = new TarefaService($conexao, $tarefa);
 		$tarefas = $tarefaService->OrderCriacao();
+
 	} else if($acao == 'OrderPrioridade') {
 
 		$tarefa = new Tarefa();
@@ -106,15 +108,18 @@
 
 	} else if ($acao == 'FiltrarTarefas') {
 
-		$status = $_GET['status'];
-    	$tarefaService = new TarefaService($conexao, $tarefa);
-    	$tarefas = $tarefaService->FiltrarTarefas($status);
+		$tarefa = new Tarefa();
+		$conexao = new Conexao();
+		$tarefa->__set('status', $_GET['status']);	
 
+		$tarefaService = new TarefaService($conexao, $tarefa);
+		$tarefas = $tarefaService->FiltrarTarefas($status);
 
 	}else if ($acao == 'FiltrarCategorias') {
 		$tarefa = new Tarefa();
 		$conexao = new Conexao();			
 		$tarefa->__set('categoria', $categoria);
+		
 
 		$tarefaService = new TarefaService($conexao, $tarefa);
 		$tarefas_filtered = $tarefaService->FiltrarCategorias($categoria);

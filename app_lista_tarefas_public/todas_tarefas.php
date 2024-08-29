@@ -87,8 +87,8 @@ require 'tarefa_controller.php';
 			function OrderPrioridade() {
 				location.href = 'todas_tarefas.php?acao=OrderPrioridade';
 			}
-			function FiltrarTarefas(){
-				var status = document.getElementsByName('status')[0].value;
+			function FiltrarTarefas(status){
+				
     			location.href = 'todas_tarefas.php?acao=FiltrarTarefas&status=' + status;
 			}
 			function FiltrarCategorias(categoria){
@@ -134,10 +134,10 @@ require 'tarefa_controller.php';
 								<form>
 									<select name="status">
 										<option value="todas">Todas</option>
-										<option value="concluidas">Concluídas</option>
-										<option value="pendentes">Pendentes</option>
+										<option value="realizado">Concluídas</option>
+										<option value="pendente">Pendentes</option>
 									</select>
-									<button type="submit" onclick="FiltrarTarefas()">Filtrar Tarefas</button>
+									<button type="submit" onclick="FiltrarTarefas(this.value)">Filtrar Tarefas</button>
 								
 								<form>
 									<select name="categoria">
@@ -175,6 +175,17 @@ require 'tarefa_controller.php';
 												<p>Categoria: <?= $tarefa->categoria?></p>
 												<p>Prioridade: <?= $tarefa->prioridade ?></p>
 											<?php } ?>
+
+											<?php 
+												$today = date('Y-m-d');
+												if($tarefa->data_limite <= $today) {
+													// Prazo expirado
+													echo '<span class="text-danger">Prazo expirado!</span>';
+												} elseif($tarefa->data_limite <= date('Y-m-d', strtotime('+7 days'))) {
+													// Prazo próximo
+													echo '<span class="text-warning">Prazo próximo!</span>';
+												}
+											?>
 											
 
 										</div>
