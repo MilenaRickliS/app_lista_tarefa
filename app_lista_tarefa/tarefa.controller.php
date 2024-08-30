@@ -4,8 +4,7 @@
 	require "../app_lista_tarefa/tarefa.service.php";
 	require "../app_lista_tarefa/conexao.php";
 
-	$acao = isset($_GET['acao']) ? $_GET['acao'] : 'recuperar';
-	// $acao = isset($_GET['acao']) ? ($_GET['acao'] == 'FiltrarTarefas' ? 'FiltrarTarefas' : 'FiltrarCategorias') : 'FiltrarTarefas';
+	$acao = isset($_GET['acao']) ? $_GET['acao'] : 'Filtrar';
 	
 	if($acao == 'inserir' ) {
 		$tarefa = new Tarefa();
@@ -105,26 +104,13 @@
 		$tarefaService = new TarefaService($conexao, $tarefa);
 		$tarefas = $tarefaService->OrderPrioridade();
 
-	} else if ($acao == 'FiltrarTarefas') {
+	} else if ($acao == 'Filtrar') {
 		$tarefa = new Tarefa();
 		$conexao = new Conexao();
-		$tarefa->__set('status', $_GET['status']);    
-	
 		$tarefaService = new TarefaService($conexao, $tarefa);
-		$tarefas = $tarefaService->FiltrarTarefas($_GET['status']);
-
-	}else if ($acao == 'FiltrarCategorias') {
-		$tarefa = new Tarefa();
-		$conexao = new Conexao();			
-		$tarefa->__set('categoria', $_GET['categoria']);
-		
-
-		$tarefaService = new TarefaService($conexao, $tarefa);
-		$tarefas = $tarefaService->FiltrarCategorias($_GET['categoria']);
-		
+		$tarefas = $tarefaService->Filtrar($_GET['status'], $_GET['categoria']);
 		require_once 'todas_tarefas.php';
-		
-		
+
 	}else if ($acao == 'arquivarTarefa') {
 
 		$tarefa = new Tarefa();

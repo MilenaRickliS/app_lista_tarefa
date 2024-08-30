@@ -74,47 +74,47 @@ class TarefaService{
 
     //ordenar por prioridade
     public function OrderPrioridade(){
-        $query = "select t.id, s.status, t.tarefa, t.categoria, t.prioridade, t.data_limite from tb_tarefas as t left join tb_status as s on (t.id_status = s.id) order by t.prioridade ";
+        $query = "SELECT t.id, s.status, t.tarefa, t.categoria, t.prioridade, t.data_limite 
+        FROM tb_tarefas AS t LEFT JOIN tb_status AS s ON (t.id_status = s.id) 
+        ORDER BY CASE WHEN t.prioridade = 'Alta' THEN 1 WHEN t.prioridade = 'Média' THEN 2 WHEN t.prioridade = 'Baixa' THEN 3 END";
         $conn = $this->conexao->prepare($query);
         $conn->execute();
         return $conn->fetchAll((PDO::FETCH_OBJ));
     }
-
-    // Filtro tarefas
-    public function FiltrarTarefas($status) {
-        if($status == "todas"){
-            $query = "select t.id, s.status, t.tarefa, t.categoria, t.prioridade, t.data_limite from tb_tarefas as t left join tb_status as s on (t.id_status = s.id)";
-            $conn = $this->conexao->prepare($query);
-        }else{
-            $query = "select t.id, s.status, t.tarefa, t.categoria, t.prioridade, t.data_limite from tb_tarefas as t left join tb_status as s on (t.id_status = s.id) where s.status = :status";
-            $conn = $this->conexao->prepare($query);
-            $conn->bindValue(':status', $status);
-        }
-        
-        $conn->execute();
-        return $conn->fetchAll(PDO::FETCH_OBJ);
-    }
-
-    //filtro categorias
-    public function FiltrarCategorias($categoria) {
-        if ($categoria == 'todas') {
+    //FILTRO
+    public function Filtrar($status, $categoria) {
+        if ($status == "todas" && $categoria == "todas") {
             $query = "SELECT t.id, s.status, t.tarefa, t.categoria, t.prioridade, t.data_limite 
                        FROM tb_tarefas AS t 
                        LEFT JOIN tb_status AS s ON (t.id_status = s.id)";
             $conn = $this->conexao->prepare($query);
-        } else {
+        } elseif ($status != "todas" && $categoria == "todas") {
+            $query = "SELECT t.id, s.status, t.tarefa, t.categoria, t.prioridade, t.data_limite 
+                       FROM tb_tarefas AS t 
+                       LEFT JOIN tb_status AS s ON (t.id_status = s.id) 
+                       WHERE s.status = :status";
+            $conn = $this->conexao->prepare($query);
+            $conn->bindValue(':status', $status);
+        } elseif ($status == "todas" && $categoria != "todas") {
             $query = "SELECT t.id, s.status, t.tarefa, t.categoria, t.prioridade, t.data_limite 
                        FROM tb_tarefas AS t 
                        LEFT JOIN tb_status AS s ON (t.id_status = s.id) 
                        WHERE t.categoria = :categoria";
             $conn = $this->conexao->prepare($query);
             $conn->bindValue(':categoria', $categoria);
+        } else {
+            $query = "SELECT t.id, s.status, t.tarefa, t.categoria, t.prioridade, t.data_limite 
+                       FROM tb_tarefas AS t 
+                       LEFT JOIN tb_status AS s ON (t.id_status = s.id) 
+                       WHERE s.status = :status AND t.categoria = :categoria";
+            $conn = $this->conexao->prepare($query);
+            $conn->bindValue(':status', $status);
+            $conn->bindValue(':categoria', $categoria);
         }
+    
         $conn->execute();
         return $conn->fetchAll(PDO::FETCH_OBJ);
-        
     }
-    //sistema de notificações
     
 
     //separar tarefas concluidas das pendentes

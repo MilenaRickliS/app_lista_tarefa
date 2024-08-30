@@ -87,13 +87,10 @@ require 'tarefa_controller.php';
 			function OrderPrioridade() {
 				location.href = 'todas_tarefas.php?acao=OrderPrioridade';
 			}
-			function FiltrarTarefas(status){
-				
-    			location.href = 'todas_tarefas.php?acao=FiltrarTarefas&status=' + status;
-			}
-			function FiltrarCategorias(categoria){
-				
-    			location.href = 'todas_tarefas.php?acao=FiltrarCategorias&categoria=' + categoria;
+			function Filtrar() {
+				var status = document.getElementById("status").value;
+				var categoria = document.getElementById("categoria").value;
+				location.href = 'todas_tarefas.php?acao=Filtrar&status=' + status + '&categoria=' + categoria;
 			}
 			function arquivarTarefa(id){
 				location.href = 'todas_tarefas.php?acao=arquivarTarefa&id=' + id;
@@ -131,28 +128,28 @@ require 'tarefa_controller.php';
 								<button class="btn btn-secondary" onclick="OrderCriacao()">Ordenar por criação</button>
 								<button class="btn btn-secondary" onclick="OrderPrioridade()">Ordenar por prioridade</button>
 								<hr />
-								<form>
-									<select name="status">
-										<option value="todas">Todas</option>
-										<option value="realizado">Concluídas</option>
-										<option value="pendente">Pendentes</option>
-									</select>
-									<button type="submit" onclick="FiltrarTarefas(this.value)">Filtrar Tarefas</button>
 								
-								<form>
-									<select name="categoria">
-										<option value="todas">Todas</option>
-										<option value="rotina">Tarefa de rotina</option>
-										<option value="longoprazo">Tarefa de longo prazo</option>
-										<option value="manutencao">Tarefa de manutenção</option>
-										<option value="prioritaria">Tarefa prioritária</option>
-										<option value="criativa">Tarefa criativa</option>
-										<option value="pesquisa">Tarefa de pesquisa</option>
-										<option value="aprendizado">Tarefa de aprendizado</option>
-										<option value="administrativa">Tarefa administrativa</option>
-										<option value="colaboracao">Tarefa de colaboração</option>										
-									</select>
-									<button type="submit" onclick="FiltrarCategorias(this.value)">Filtrar por Categoria</button>
+								
+									<form>
+										<select name="status" id="status">
+											<option value="todas">Todas</option>
+											<option value="realizado">Concluídas</option>
+											<option value="pendente">Pendentes</option>
+										</select>
+										<select name="categoria" id="categoria">
+											<option value="todas">Todas</option>
+											<option value="rotina">Tarefa de rotina</option>
+											<option value="longoprazo">Tarefa de longo prazo</option>
+											<option value="manutencao">Tarefa de manutenção</option>
+											<option value="prioritaria">Tarefa prioritária</option>
+											<option value="criativa">Tarefa criativa</option>
+											<option value="pesquisa">Tarefa de pesquisa</option>
+											<option value="aprendizado">Tarefa de aprendizado</option>
+											<option value="administrativa">Tarefa administrativa</option>
+											<option value="colaboracao">Tarefa de colaboração</option>
+										</select>
+										<button type="submit" onclick="Filtrar()">Filtrar</button>
+									</form>
 								
 								
 
@@ -191,8 +188,7 @@ require 'tarefa_controller.php';
 									</div>
 									<?php } ?>
 								<?php } ?>
-								</form>
-								</form>
+								
 								
 								
 							</div>
