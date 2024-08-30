@@ -17,3 +17,11 @@ create table tb_tarefas(
     categoria text not null,
     prioridade text not null,
 )
+
+
+//ALTER TABLE tb_tarefas
+ADD COLUMN data_limite date
+ALTER TABLE tb_tarefas
+ADD COLUMN categoria VARCHAR(50)
+INSERT into tb_status (id, status)
+VALUES (3, 'arquivado')
