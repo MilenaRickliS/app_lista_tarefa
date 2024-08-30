@@ -25,28 +25,85 @@ $acao = 'Filtrar';
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
 		<style>
-			
+			.tarefa {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-between;
+			}
+
+			.tarefa > div {
+				flex-basis: 12.5%; 
+			}
 			.tarefa-titulo {
 				padding-right: 15px;
 				font-weight: bold;
 				color: #333;
 			}
+
 			.tarefa-data {
-				padding-right: 15px;
-				font-size: 14px;
-				color: #FF4D80;
+				margin-right: 15px;
+				padding: 15px;
+				width: 80px;
+				font-size: 10px;
+				color: #fff;
+				background-color: #00523D;
+				border-radius: 15px;
 			}
 
 			.tarefa-categoria {
-				padding-right: 15px;
-				font-size: 14px;
-				color: #ECC30B;
+				margin-right: 15px;
+				padding: 15px;
+				width: 80px;
+				font-size: 10px;
+				color: #000;
+				background-color: #ADCAFF;
+				border-radius: 15px;
 			}
-			.tarefa-prioridade{
-				padding-right: 15px;
-				font-size: 14px;
-				color: #272635;
+
+			.tarefa-prioridade {
+				margin-right: 15px;
+				padding: 15px;
+				width: 80px;
+				font-size: 10px;
+				color: #000;
+				border-radius: 15px;
 			}
+
+			.tarefa-prioridade.alta {
+				background-color: #D1234C;
+			}
+
+			.tarefa-prioridade.media {
+				background-color: #FFE66D;
+			}
+
+			.tarefa-prioridade.baixa {
+				background-color: #4ECDC4;
+			}
+
+			
+			@media (max-width: 990px) {
+			.tarefa {
+				flex-direction: column;
+			}
+			.tarefa-data, .tarefa-categoria, .tarefa-prioridade {
+				margin-bottom: 10px;
+			}
+			}
+			.prazo-container {
+				width: 120px; 
+			}
+			.prazo{
+				
+				padding: 2px;
+				font-size: 13px;
+				font-weight: bold;
+				width: 200px;
+				box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;				
+				border-radius: 15px;
+				background-color: #fff;
+			}
+
 
 
 		</style>
@@ -183,39 +240,59 @@ $acao = 'Filtrar';
 
 								<?php foreach($tarefas as $indice => $tarefa) { ?>
 									<?php if($tarefa->status == 'pendente' || $tarefa->status == 'realizado') { ?>
-									<div class="row mb-3 d-flex align-items-center tarefa">
-										<div class="col-sm-6" id="tarefa_<?= $tarefa->id ?>">
-											<span class="tyarefa-titulo"><?= $tarefa->tarefa ?></span> (<?= $tarefa->status  ?> )
+										<div class="row mb-3 d-flex align-items-center tarefa">
+										<div class="col-sm-2" id="tarefa_<?= $tarefa->id ?>">
+											<span class="tarefa-titulo"><?= $tarefa->tarefa ?></span> <?= $tarefa->status  ?> 
 											<?php if($tarefa->status == 'realizado') { ?>
-												<button class="btn btn-secondary" onclick="arquivarTarefa(<?= $tarefa->id ?>)">Arquivar Tarefa Concluída</button>
+											<button class="btn btn-secondary" onclick="arquivarTarefa(<?= $tarefa->id ?>)">Arquivar Tarefa Concluída</button>
 											<?php } ?>
 										</div>
-										<div class="col-sm-3 mt-2 d-flex justify-content-between">
-											
-											
+										<div class="col-sm-1 mt-2">
 											<?php if($tarefa->status == 'pendente') { ?>
-												<p class="tarefa-data">Prazo: <?= $tarefa->data_limite?></p>
-												<p class="tarefa-categoria">Categoria: <?= $tarefa->categoria?></p>
-												<p class="tarefa-prioridade">Prioridade: <?= $tarefa->prioridade ?></p>
-												<i class="fas fa-trash-alt fa-lg text-danger" onclick="remover(<?= $tarefa->id ?>)"></i>
-												<i class="fas fa-edit fa-lg text-info" onclick="editar(<?= $tarefa->id ?>, '<?= $tarefa->tarefa ?>')"></i>
-												<i class="fas fa-check-square fa-lg text-success" onclick="TarefaRealizada(<?= $tarefa->id ?>)"></i>
-												
-												<?php 
-													$today = date('Y-m-d');												
-													if($tarefa->data_limite <= $today) {
-														// Prazo expirado
-														echo '<span class="text-danger">Prazo expirado!</span>';
-													} else if($tarefa->data_limite <= date('Y-m-d', strtotime('+7 days'))) {
-														// Prazo próximo
-														echo '<span class="text-warning">Prazo próximo!</span>';
-													}
-												?>
+											<p class="tarefa-data"><?= date('d/m/Y', strtotime($tarefa->data_limite)) ?></p>
+											<?php } ?>
+										</div>
+										<div class="col-sm-1 mt-2">
+											<?php if($tarefa->status == 'pendente') { ?>
+											<p class="tarefa-categoria"><?= $tarefa->categoria ?></p>
+											<?php } ?>
+										</div>
+										<div class="col-sm-1 mt-2">
+											<?php if($tarefa->status == 'pendente') { ?>
+											<p class="tarefa-prioridade <?= $tarefa->prioridade == 'alta' ? 'alta' : ($tarefa->prioridade == 'media' ? 'media' : 'baixa') ?>"><?= $tarefa->prioridade ?></p>
+											<?php } ?>
+										</div>
+										<div class="col-sm-1 mt-2">
+											<?php if($tarefa->status == 'pendente') { ?>
+											<i class="fas fa-trash-alt fa-lg text-danger" onclick="remover(<?= $tarefa->id ?>)"></i>
+											<?php } ?>
+										</div>
+										<div class="col-sm-1 mt-2">
+											<?php if($tarefa->status == 'pendente') { ?>
+											<i class="fas fa-edit fa-lg text-info" onclick="editar(<?= $tarefa->id ?>, '<?= $tarefa->tarefa ?>')"></i>
+											<?php } ?>
+										</div>
+										<div class="col-sm-1 mt-2">
+											<?php if($tarefa->status == 'pendente') { ?>
+											<i class="fas fa-check-square fa-lg text-success" onclick="TarefaRealizada(<?= $tarefa->id ?>)"></i>
+											<?php } ?>
+										</div>										
+										<div class="col-sm-1 mt-2 prazo-container">
+											<?php if($tarefa->status == 'pendente') { ?>
+											<?php 
+												$today = date('Y-m-d');												
+												if($tarefa->data_limite <= $today) {
+												// Prazo expirado
+												echo '<span class="text-danger prazo">Prazo expirado!</span>';
+												} else if($tarefa->data_limite <= date('Y-m-d', strtotime('+7 days'))) {
+												// Prazo próximo
+												echo '<span class="text-warning prazo">Prazo próximo!</span>';
+												}
+											?>
 											<?php } ?>
 										
-
 										</div>
-									</div>
+										</div>
 									<?php } ?>
 								<?php } ?>
 								

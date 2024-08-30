@@ -16,27 +16,70 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
 		<style>
-			
+			.tarefa {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-between;
+			}
+
+			.tarefa > div {
+				flex-basis: 14.28%; 
+			}
 			.tarefa-titulo {
 				padding-right: 15px;
 				font-weight: bold;
 				color: #333;
 			}
+
 			.tarefa-data {
-				padding-right: 15px;
-				font-size: 14px;
-				color: #FF4D80;
+				margin-right: 15px;
+				padding: 15px;
+				width: 80px;
+				font-size: 10px;
+				color: #fff;
+				background-color: #00523D;
+				border-radius: 15px;
 			}
 
 			.tarefa-categoria {
-				padding-right: 15px;
-				font-size: 14px;
-				color: #ECC30B;
+				margin-right: 15px;
+				padding: 15px;
+				width: 80px;
+				font-size: 10px;
+				color: #000;
+				background-color: #ADCAFF;
+				border-radius: 15px;
 			}
-			.tarefa-prioridade{
-				padding-right: 15px;
-				font-size: 14px;
-				color: #272635;
+
+			.tarefa-prioridade {
+				margin-right: 15px;
+				padding: 15px;
+				width: 80px;
+				font-size: 10px;
+				color: #000;
+				border-radius: 15px;
+			}
+
+			.tarefa-prioridade.alta {
+				background-color: #D1234C;
+			}
+
+			.tarefa-prioridade.media {
+				background-color: #FFE66D;
+			}
+
+			.tarefa-prioridade.baixa {
+				background-color: #4ECDC4;
+			}
+
+			
+			@media (max-width: 990px) {
+			.tarefa {
+				flex-direction: column;
+			}
+			.tarefa-data, .tarefa-categoria, .tarefa-prioridade {
+				margin-bottom: 10px;
+			}
 			}
 
 
@@ -127,35 +170,43 @@
 				</div>
 
 				<div class="col-md-9">
-					<div class="container pagina">
-						<div class="row">
-							<div class="col">
-								<h4>Tarefas pendentes</h4>
-								<hr />
+				<div class="container pagina">
+					<div class="row">
+					<div class="col">
+						<h4>Tarefas pendentes</h4>
+						<hr />
 
-								<?php foreach($tarefas as $indice => $tarefa) { 
-									if($tarefa->status == 'pendente') {?>
-									<div class="row mb-3 d-flex align-items-center tarefa">
-										<div class="col-sm-6" id="tarefa_<?= $tarefa->id ?>">
-											<span class="tarefa-titulo"><?= $tarefa->tarefa ?></span>
-										</div>
-										<div class="col-sm-3 mt-2 d-flex justify-content-between">
-											<p class="tarefa-data">Prazo: <?= $tarefa->data_limite?></p>
-											<p class="tarefa-categoria">Categoria: <?= $tarefa->categoria?></p>
-											<p class="tarefa-prioridade">Prioridade: <?= $tarefa->prioridade ?></p>
-											<i class="fas fa-trash-alt fa-lg text-danger" onclick="remover(<?= $tarefa->id ?>)"></i>
-											<i class="fas fa-edit fa-lg text-info" onclick="editar(<?= $tarefa->id ?>, '<?= $tarefa->tarefa ?>')"></i>
-											<i class="fas fa-check-square fa-lg text-success" onclick="TarefaRealizada(<?= $tarefa->id ?>)"></i>
-											
-										</div>
-									</div>
-
-								<?php } }?>
-
-								
-							</div>
+						<?php foreach($tarefas as $indice => $tarefa) { 
+						if($tarefa->status == 'pendente') {?>
+						<div class="row mb-3 d-flex align-items-center tarefa">
+						<div class="col-sm-2" id="tarefa_<?= $tarefa->id ?>">
+							<span class="tarefa-titulo"><?= $tarefa->tarefa ?></span>
 						</div>
+						<div class="col-sm-1 mt-2">
+							<p class="tarefa-data"><?= date('d/m/Y', strtotime($tarefa->data_limite)) ?></p>
+						</div>
+						<div class="col-sm-1 mt-2">
+							<p class="tarefa-categoria"><?= $tarefa->categoria ?></p>
+						</div>
+						<div class="col-sm-1 mt-2">
+							<p class="tarefa-prioridade <?= $tarefa->prioridade == 'alta' ? 'alta' : ($tarefa->prioridade == 'media' ? 'media' : 'baixa') ?>"><?= $tarefa->prioridade ?></p>
+						</div>
+						<div class="col-sm-1 mt-2">
+							<i class="fas fa-trash-alt fa-lg text-danger" onclick="remover(<?= $tarefa->id ?>)"></i>
+						</div>
+						<div class="col-sm-1 mt-2">
+							<i class="fas fa-edit fa-lg text-info" onclick="editar(<?= $tarefa->id ?>, '<?= $tarefa->tarefa ?>')"></i>
+						</div>
+						<div class="col-sm-1 mt-2">
+							<i class="fas fa-check-square fa-lg text-success" onclick="TarefaRealizada(<?= $tarefa->id ?>)"></i>
+						</div>
+						</div>
+
+						<?php } }?>
+
 					</div>
+					</div>
+				</div>
 				</div>
 			</div>
 		</div>

@@ -58,13 +58,13 @@
 											<option value="aprendizado">Tarefa de aprendizado</option>
 											<option value="administrativa">Tarefa administrativa</option>
 											<option value="colaboracao">Tarefa de colaboração</option>
-										</select>
+										</select><br>
 										<label>Prioridade da tarefa:</label>
 										<select name="prioridade">
 											<option value="baixa">Baixa</option>
 											<option value="media">Média</option>
 											<option value="alta">Alta</option>
-										</select>
+										</select><br>
 										<label>Data de prazo para a tarefa:</label>
 										<input type="date" class="form-control" name="data_limite" placeholder="Data de prazo para tarefa">
 									</div>

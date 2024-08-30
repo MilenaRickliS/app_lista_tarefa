@@ -80,7 +80,7 @@
 											<span class="tarefa-titulo"><?= $tarefa->tarefa ?></span>
 											<span class="tarefa-data"><?= $tarefa->data_limite?></span>
 											<span class="tarefa-categoria"><?= $tarefa->categoria?></span>
-											<
+											
 										</div>
 										<div class="col-sm-3 text-right">
 											<i class="fas fa-archive fa-lg text-muted"></i>
