@@ -108,16 +108,17 @@
 								<?php foreach($tarefas as $indice => $tarefa) { 
 									if($tarefa->status == 'pendente') {?>
 									<div class="row mb-3 d-flex align-items-center tarefa">
-										<div class="col-sm-9" id="tarefa_<?= $tarefa->id ?>">
+										<div class="col-sm-6" id="tarefa_<?= $tarefa->id ?>">
 											<?= $tarefa->tarefa ?>
 										</div>
 										<div class="col-sm-3 mt-2 d-flex justify-content-between">
-											<i class="fas fa-trash-alt fa-lg text-danger" onclick="remover(<?= $tarefa->id ?>)"></i>
-											<i class="fas fa-edit fa-lg text-info" onclick="editar(<?= $tarefa->id ?>, '<?= $tarefa->tarefa ?>')"></i>
-											<i class="fas fa-check-square fa-lg text-success" onclick="TarefaRealizada(<?= $tarefa->id ?>)"></i>
 											<p>Prazo: <?= $tarefa->data_limite?></p>
 											<p>Categoria: <?= $tarefa->categoria?></p>
 											<p>Prioridade: <?= $tarefa->prioridade ?></p>
+											<i class="fas fa-trash-alt fa-lg text-danger" onclick="remover(<?= $tarefa->id ?>)"></i>
+											<i class="fas fa-edit fa-lg text-info" onclick="editar(<?= $tarefa->id ?>, '<?= $tarefa->tarefa ?>')"></i>
+											<i class="fas fa-check-square fa-lg text-success" onclick="TarefaRealizada(<?= $tarefa->id ?>)"></i>
+											
 										</div>
 									</div>
 

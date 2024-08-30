@@ -4,7 +4,7 @@
 	require "../app_lista_tarefa/tarefa.service.php";
 	require "../app_lista_tarefa/conexao.php";
 
-	$acao = isset($_GET['acao']) ? $_GET['acao'] : 'Filtrar';
+	$acao = isset($_GET['acao']) ? $_GET['acao'] : 'recuperar';
 	
 	if($acao == 'inserir' ) {
 		$tarefa = new Tarefa();
@@ -24,10 +24,14 @@
 		
 		$tarefa = new Tarefa();
 		$conexao = new Conexao();
-		
-
 		$tarefaService = new TarefaService($conexao, $tarefa);
-		$tarefas = $tarefaService->recuperar();
+		// $tarefas = $tarefaService->recuperar();
+		if (!empty($_GET['status']) && !empty($_GET['categoria'])) {
+			$tarefas = $tarefaService->Filtrar($_GET['status'], $_GET['categoria']);
+		} else {
+			$tarefas = $tarefaService->recuperar();
+		}
+
 	
 	} else if($acao == 'atualizar') {
 
@@ -105,6 +109,7 @@
 		$tarefas = $tarefaService->OrderPrioridade();
 
 	} else if ($acao == 'Filtrar') {
+		
 		$tarefa = new Tarefa();
 		$conexao = new Conexao();
 		$tarefaService = new TarefaService($conexao, $tarefa);
