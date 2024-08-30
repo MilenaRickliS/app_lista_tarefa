@@ -24,6 +24,33 @@ $acao = 'Filtrar';
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
+		<style>
+			
+			.tarefa-titulo {
+				padding-right: 15px;
+				font-weight: bold;
+				color: #333;
+			}
+			.tarefa-data {
+				padding-right: 15px;
+				font-size: 14px;
+				color: #FF4D80;
+			}
+
+			.tarefa-categoria {
+				padding-right: 15px;
+				font-size: 14px;
+				color: #ECC30B;
+			}
+			.tarefa-prioridade{
+				padding-right: 15px;
+				font-size: 14px;
+				color: #272635;
+			}
+
+
+		</style>
+
 		<script>
 			function editar(id, txt_tarefa) {
 
@@ -158,7 +185,7 @@ $acao = 'Filtrar';
 									<?php if($tarefa->status == 'pendente' || $tarefa->status == 'realizado') { ?>
 									<div class="row mb-3 d-flex align-items-center tarefa">
 										<div class="col-sm-6" id="tarefa_<?= $tarefa->id ?>">
-											<?= $tarefa->tarefa ?> (<?= $tarefa->status  ?> )
+											<span class="tyarefa-titulo"><?= $tarefa->tarefa ?></span> (<?= $tarefa->status  ?> )
 											<?php if($tarefa->status == 'realizado') { ?>
 												<button class="btn btn-secondary" onclick="arquivarTarefa(<?= $tarefa->id ?>)">Arquivar Tarefa Concluída</button>
 											<?php } ?>
@@ -167,9 +194,9 @@ $acao = 'Filtrar';
 											
 											
 											<?php if($tarefa->status == 'pendente') { ?>
-												<p>Prazo: <?= $tarefa->data_limite?></p>
-												<p>Categoria: <?= $tarefa->categoria?></p>
-												<p>Prioridade: <?= $tarefa->prioridade ?></p>
+												<p class="tarefa-data">Prazo: <?= $tarefa->data_limite?></p>
+												<p class="tarefa-categoria">Categoria: <?= $tarefa->categoria?></p>
+												<p class="tarefa-prioridade">Prioridade: <?= $tarefa->prioridade ?></p>
 												<i class="fas fa-trash-alt fa-lg text-danger" onclick="remover(<?= $tarefa->id ?>)"></i>
 												<i class="fas fa-edit fa-lg text-info" onclick="editar(<?= $tarefa->id ?>, '<?= $tarefa->tarefa ?>')"></i>
 												<i class="fas fa-check-square fa-lg text-success" onclick="TarefaRealizada(<?= $tarefa->id ?>)"></i>
